@@ -1,6 +1,6 @@
 # kayron-cli
 
-![npm版本](https://img.shields.io/badge/kayron-cli_v0.0.1-green)
+![npm版本](https://img.shields.io/badge/kayron-cli_v0.0.3-green)
 
 ## 📖 简介
 
