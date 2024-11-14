@@ -52,20 +52,20 @@ export const getNpmInfo = async (npmName: string) => {
   return res
 }
 
-export const getNpmLatestVersion = async (name: string) => {
-  const { data } = (await getNpmInfo(name)) as AxiosResponse
-  return data['dist-tags'].latest
-}
+// export const getNpmLatestVersion = async (name: string) => {
+//   const { data } = (await getNpmInfo(name)) as AxiosResponse
+//   return data['dist-tags'].latest
+// }
 
-export const checkVersion = async (name: string, version: string) => {
-  const latestVersion = await getNpmLatestVersion(name)
-  const need = gt(latestVersion, version)
-  if (need) {
-    console.warn(`检测到kayron-cli最新版本为：${chalk.blueBright(latestVersion)}, 当前版本为${chalk.blueBright(version)}`)
-    console.warn(`可使用：${chalk.yellow('npm install kayron-cli@latest')}，或者${chalk.yellow('kayron update')}升级`)
-  }
-  return need
-}
+// export const checkVersion = async (name: string, version: string) => {
+//   const latestVersion = await getNpmLatestVersion(name)
+//   const need = gt(latestVersion, version)
+//   if (need) {
+//     console.warn(`检测到kayron-cli最新版本为：${chalk.blueBright(latestVersion)}, 当前版本为${chalk.blueBright(version)}`)
+//     console.warn(`可使用：${chalk.yellow('npm install kayron-cli@latest')}，或者${chalk.yellow('kayron update')}升级`)
+//   }
+//   return need
+// }
 
 export async function create(projectName?: string) {
   // 初始化模板列表
@@ -93,14 +93,13 @@ export async function create(projectName?: string) {
   }
 
   // 检查版本更新
-  await checkVersion(name, version)
+  // await checkVersion(name, version)
 
   const templateName = await select({
     message: '请选择模板',
     choices: templateList
   })
   const info = templates.get(templateName)
-  console.log(info)
   if (info) {
     clone(info.downloadUrl, projectName!, ['-b', info.branch])
   }

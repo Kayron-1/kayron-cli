@@ -25,6 +25,9 @@ npm install kayron-cli -g
   # 执行项目文件夹名称并选择模板创建新项目
   kayron create [projectName]
 
+  # 更新脚手架到最新版本
+  kayron update
+
   # 查看脚手架版本
   kayron -v
   kayron --version
