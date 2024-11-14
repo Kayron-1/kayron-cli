@@ -1,8 +1,11 @@
 import path from 'path';
+import chalk from "chalk";
 import fs from 'fs-extra';
+import { gt } from 'lodash';
+import axios, { AxiosResponse } from 'axios';
 import { input, select } from '@inquirer/prompts';
 import { clone } from '../utils/clone';
-
+import { name, version } from '../../package.json';
 export interface TemplateInfo {
   name: string // 模板名称
   downloadUrl: string // 模板下载地址
@@ -38,6 +41,32 @@ export function isOverWrite(fileName: string) {
   })
 }
 
+export const getNpmInfo = async (npmName: string) => {
+  const npmUrl = `https://registry.npmjs.org/${npmName}`
+  let res = {}
+  try {
+    res = await axios.get(npmUrl)
+  } catch (error) {
+    console.error(error)
+  }
+  return res
+}
+
+export const getNpmLatestVersion = async (name: string) => {
+  const { data } = (await getNpmInfo(name)) as AxiosResponse
+  return data['dist-tags'].latest
+}
+
+export const checkVersion = async (name: string, version: string) => {
+  const latestVersion = await getNpmLatestVersion(name)
+  const need = gt(latestVersion, version)
+  if (need) {
+    console.warn(`检测到kayron-cli最新版本为：${chalk.blueBright(latestVersion)}, 当前版本为${chalk.blueBright(version)}`)
+    console.warn(`可使用：${chalk.yellow('npm install kayron-cli@latest')}，或者${chalk.yellow('kayron update')}升级`)
+  }
+  return need
+}
+
 export async function create(projectName?: string) {
   // 初始化模板列表
   const templateList = Array.from(templates).map((item: [string, TemplateInfo]) => {
@@ -62,6 +91,10 @@ export async function create(projectName?: string) {
       return
     }
   }
+
+  // 检查版本更新
+  await checkVersion(name, version)
+
   const templateName = await select({
     message: '请选择模板',
     choices: templateList

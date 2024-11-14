@@ -7,7 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rollup -c rollup.config.mjs --bundleConfigAsCjw"
   },
-  "keywords": ["Vite", "Vue3", "Typescript", "Element-plus"],
+  "keywords": [
+    "Vite",
+    "Vue3",
+    "Typescript",
+    "Element-plus"
+  ],
   "author": "kayron",
   "bin": {
     "kayron": "bin/index.js"
@@ -25,9 +30,12 @@
     "@rollup/plugin-node-resolve": "^15.3.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@types/fs-extra": "^11.0.4",
+    "@types/lodash": "^4.17.13",
+    "axios": "^1.7.7",
     "chalk": "^4.1.2",
     "commander": "^12.1.0",
     "fs-extra": "^11.2.0",
+    "lodash": "^4.17.21",
     "progress-estimator": "^0.3.1",
     "rollup": "^4.25.0",
     "rollup-plugin-node-externals": "^7.1.3",
